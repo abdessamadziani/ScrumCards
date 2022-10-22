@@ -16,7 +16,7 @@
 	<link href="assets/css/style.css" rel="stylesheet" />
 	<!-- ================== END core-css ================== -->
 </head>
-<body>
+<body onload="showData()"  >
 
 	<!-- BEGIN #app -->
 	<div id="app" class="app-without-sidebar">
@@ -37,7 +37,7 @@
 				
 				<div class="">
 						  
-				<button type="button" class="btn btn-outline-success text-capitalize "data-bs-toggle="modal" data-bs-target="#taskBtn"><i class="fa-solid fa-plus"></i>add task</button>
+				<button id="btnAdd" onclick="addnew()" type="button" class="btn btn-outline-success text-capitalize "data-bs-toggle="modal" data-bs-target="#taskBtn"><i class="fa-solid fa-plus"></i>add task</button>
 				</div>
 			</div>
 			
@@ -45,7 +45,7 @@
 				<div class="col-sm-12 col-md-6 col-lg-4 mb-3">
 					<div class="card bg-transparent">
 						<div class="card-header bg-black text-white">
-							<h4 class="">To do (<span id="to-do-tasks-count">5</span>)</h4>
+							<h4 class="">To do (<span id="to-do-task-count"></span>)</h4>
 						</div>
 						<div class="list-group-item card-item bg-transparent" id="to-do-tasks">
 							<!-- TO DO TASKS HERE -->
@@ -117,7 +117,7 @@
 									</div>
 								</div>
 							</button>
-							<button class="d-flex  border-0  text-start p-2 bg-white mt-1 w-100">
+							<button class="d-flex  border-0  text-start p-2 bg-white mt-1 mb-1 w-100">
 								<div class="">
 									<i class="bi bi-question-circle text-success fs-5 pe-2"></i> 
 								</div>
@@ -139,7 +139,7 @@
 				<div class="col-sm-12 col-md-6 col-lg-4 mb-3">
 					<div class="">
 						<div class=" card-header bg-black text-white">
-							<h4 class="">In Progress (<span id="in-progress-tasks-count">4</span>)</h4>
+							<h4 class="">In Progress (<span id="in-progress-tasks-count"></span>)</h4>
 
 						</div>
 						<div class="list-group-item card-item bg-transparent" id="in-progress-tasks">
@@ -210,7 +210,7 @@
 				<div class="col-sm-12 col-md-6 col-lg-4 mb-3">
 					<div class="">
 						<div class="card-header bg-black text-white">
-							<h4 class="">Done (<span id="done-tasks-count">4</span>)</h4>
+							<h4 class="">Done (<span id="done-tasks-count"></span>)</h4>
 
 						</div>
 						<div class="list-group-item card-item bg-transparent" id="done-tasks">
@@ -314,17 +314,17 @@
 		<div class="modal-body">
 			<div class="mb-3">
 				<label for="TextInput" class="form-label">Title</label>
-				<input type="text" class="form-control" id="TextInput" >
+				<input  type="text" class="form-control" id="title" >
 				
 				<label for="TextInput" class="form-label">Type</label>
-				<div class="form-check">
-				  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+				<div class=" form-check">
+				  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="Feature">
 				  <label class="form-check-label" for="flexRadioDefault1">
 					Feature
 				  </label>
 				</div>
-				<div class="form-check">
-				  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+				<div  class="form-check">
+				  <input  class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"  value="Bug">
 				  <label class="form-check-label" for="flexRadioDefault2">
 					Bug
 				  </label>
@@ -332,19 +332,20 @@
 			</div>
 
 		<label for="TextInput" class="form-label">Priority</label>
-		<select class="form-select" aria-label="Default select example">
-			<option selected>Please select</option>
-			<option value="1">One</option>
-			<option value="2">Two</option>
-			<option value="3">Three</option>
+		<select  class="form-select" aria-label="Default select example" id="selectp">
+			<!-- <option selected>Please select</option> -->
+			<option value="Low"selected >Low</option>
+			<option value="Medium">Medium</option>
+			<option value="Critical">Critical</option>
+			<option value="High">High</option>
 		  </select>
 		
 		<label for="TextInput" class="form-label">Status</label>
-		<select class="form-select" aria-label="Default select example">
-			<option selected>Please select</option>
-			<option value="1">One</option>
-			<option value="2">Two</option>
-			<option value="3">Three</option>
+		<select  class="form-select" aria-label="Default select example" id="selectStatus">
+			<!-- <option selected>Please select</option> -->
+			<option value="1" selected>To Do</option>
+			<option value="2">In Progress</option>
+			<option value="3">Done</option>
 		  </select>
 
 		  <form>
@@ -352,7 +353,7 @@
 				<label for="date" class="col-sm-1 col-form-label">Date</label>
 				<div class="col-sm-12">
 					<div class="input-group date" id="datepicker">
-						<input type="date" class="form-control">
+						<input type="date" class="form-control" id="date">
 						<span class="input-group-append">
 							<span class="input-group-text bg-white d-block">
 								<i class="fa fa-calendar"></i>
@@ -365,11 +366,14 @@
 
 		<div class="mb-3">
 			<label for="exampleFormControlTextarea1" class="form-label">Description</label>
-			<textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea>
+			<textarea  class="form-control" id="exampleFormControlTextarea1" rows="7" ></textarea>
 		  </div>
 		<div class="modal-footer">
 		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-		  <button type="button" class="btn btn-primary">Save</button>
+		  <button id="btnSave"  type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+		  <button id="btnUpdate"  onclick="upDate()" type="button" class="btn btn-warning" data-bs-dismiss="modal">Update</button>
+		  <button id="btnDelete" onclick="removeItem()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Delete</button>
+
 		</div>
 	  </div>
 	</div>
@@ -378,7 +382,9 @@
 
 	
 	<!-- ================== BEGIN core-js ================== -->
+	<script src="assets/js/main.js"></script>
 	<script src="assets/js/vendor.min.js"></script>
+	<script src="assets/js/data.js"></script>
 	<script src="assets/js/app.min.js"></script>
 	<!-- ================== END core-js ================== -->
 </body>
