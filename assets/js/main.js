@@ -17,14 +17,12 @@ let update=document.getElementById("btnUpdate");
 let remove=document.getElementById("btnDelete");
 let add=document.getElementById("btnAdd");
 var index;
+var pt
 var icon;
 var todospan=document.getElementById("to-do-task-count");
 var inprogressspan=document.getElementById("in-progress-tasks-count");
 var donespan=document.getElementById("done-tasks-count")
 var tasksStored;
-
-
-
 
 
 function addnew()
@@ -73,7 +71,6 @@ btnSave.onclick=function()
 }
 
 
-
 function showData()
 {
      todoPlace.innerHTML="";
@@ -88,11 +85,97 @@ function showData()
    for(let i=0;i<tasksStored.length;i++)
    {
     let grop=document.createElement("button");
-    grop.classList.add("mt-1","mb-1","pb-1","d-flex", "border-0", "text-start", "bg-white", "w-100","tt")
+    grop.classList.add("mt-1","bg-white","mb-1","pb-1","d-flex", "border-0", "text-start", "w-100","tt")
     grop.setAttribute("data-bs-toggle","modal") ;
     grop.setAttribute("data-bs-target","#taskBtn");
+    grop.setAttribute("draggable","true");
 
    
+    
+//drag drop place
+//    let listitems=document.querySelectorAll(".tt")
+//    let lists=document.querySelectorAll(".ls")
+
+// let draggeditem=null;
+// for(let i=0;i<listitems.length;i++)
+// {
+//     let item = listitems[i];
+//     item.addEventListener("dragstart",function()
+//     {
+//         console.log("dragstart")
+//         draggeditem=item;
+//         setTimeout(() => {
+//             draggeditem.style.display="none"
+//             // console.log(tasks[i].status)
+//             // tasks[i].status="2";
+//             // console.log(tasks[i].status)
+
+
+//         },0);
+//     })
+//     item.addEventListener("dragend",function()
+//     {
+//         console.log("dragend")
+
+//         setTimeout(() => {
+//             draggeditem.style.display="block";
+
+//         },0);
+//         //  draggeditem=null;
+
+//     })
+
+
+//     for(let j=0;j<lists.length;j++)
+//     {
+//          let list=lists[j];
+
+//          list.addEventListener("dragover",function(e)
+//          {
+//             e.preventDefault();
+//          })
+//          list.addEventListener("dragenter",function(e)
+//          {
+//             e.preventDefault();
+//          })
+//          list.addEventListener("drop",function()
+//          {
+//             this.appendChild(draggeditem);
+
+
+//             if(todoPlace.contains(draggeditem))
+//             {
+//                  console.log("in todo")
+//                 //   tasks[i].status="1";
+//                 //   localStorage.setItem("tasks",JSON.stringify(tasks));
+//             }
+//             else if(inprogressPlace.contains(draggeditem))
+//             {
+//                  console.log("in progress");
+//                 //   tasks[i].status="2";
+//                 //   localStorage.setItem("tasks",JSON.stringify(tasks));
+        
+//             }
+//             else if(donePlace.contains(draggeditem))
+//             {
+//                  console.log("done");
+//                 //  tasks[i].status="3";
+//                 //  localStorage.setItem("tasks",JSON.stringify(tasks));
+// t                  
+
+//             }
+
+
+//          })
+//     }
+
+
+// }
+
+
+  
+
+
     grop.onclick=function()
     {
        update.style.display="block";
@@ -110,6 +193,7 @@ function showData()
         desc.value=tasks[i].description;
 
     }
+
     grop.innerHTML = `
 <div class="">
     <i class=" ${tasksStored[i].status==1 ? "bi bi-question-circle text-success fs-5 pe-2" :tasksStored[i].status==2 ? "fa-solid fa-circle-notch text-success fs-5 pe-2":tasksStored[i].status==3 ? "bi bi-check-circle text-success fs-5 pe-2":"" } "></i> 
@@ -154,15 +238,25 @@ function showData()
 
 
 
+ 
+  
 
 
 
 
-
-
-
+ 
   tasks=tasksStored;
 }
+
+
+
+
+
+
+
+  
+
+
 
 
 
@@ -181,7 +275,7 @@ function removeItem()
 {
      tasks.splice(index,1);
      localStorage.setItem("tasks",JSON.stringify(tasks));
-    showData();
+     showData();
 }
 
 
@@ -198,7 +292,7 @@ function removeItem()
     tasks[index].date= date.value;
     tasks[index].description=desc.value;
     localStorage.setItem("tasks",JSON.stringify(tasks));
-    showData();
+     showData();
 
  }
 

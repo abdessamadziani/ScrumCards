@@ -16,4 +16,5 @@
 .tt 
 {
     overflow: auto;
+    cursor: move ;
 }
